@@ -13,4 +13,10 @@ export const CustomerService = {
   async getAllCustomers() {
     return prisma.customer.findMany();
   },
+
+  async getCustomerById(id: string) {
+    return prisma.customer.findUnique({
+      where: { customerId: id },
+    });
+  },
 };

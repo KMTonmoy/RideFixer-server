@@ -53,3 +53,34 @@ export const getAllCustomers = async (_req: Request, res: Response) => {
     });
   }
 };
+
+export const getCustomerById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await CustomerService.getCustomerById(id);
+
+    if (!result) {
+      return sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: "Customer not found",
+      });
+    }
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Customer fetched successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
+
+ 
