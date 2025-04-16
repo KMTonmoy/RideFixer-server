@@ -12,4 +12,16 @@ export const BikeService = {
       data: payload,
     });
   },
+
+  async getAllBikes() {
+    return prisma.bike.findMany();
+  },
+
+  async getBikeById(id: string) {
+    return prisma.bike.findUnique({
+      where: { bikeId: id },
+    });
+  },
 };
+
+
