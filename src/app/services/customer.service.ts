@@ -28,4 +28,10 @@ export const CustomerService = {
       data: payload,
     });
   },
+
+  async deleteCustomer(id: string) {
+    return prisma.customer.delete({
+      where: { customerId: id },
+    });
+  },
 };
