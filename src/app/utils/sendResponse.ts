@@ -9,11 +9,20 @@ const sendResponse = <T>(
     data?: T;
   }
 ) => {
-  res.status(data.statusCode).json({
+  const responseBody: {
+    success: boolean;
+    message: string;
+    data?: T;
+  } = {
     success: data.success,
     message: data.message,
-    data: data.data || null,
-  });
+  };
+
+  if (data.data !== undefined) {
+    responseBody.data = data.data;
+  }
+
+  res.status(data.statusCode).json(responseBody);
 };
 
 export default sendResponse;
