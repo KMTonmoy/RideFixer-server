@@ -5,7 +5,6 @@ import sendResponse from "../utils/sendResponse";
 export const createCustomer = async (req: Request, res: Response) => {
   try {
     const result = await CustomerService.createCustomer(req.body);
-
     sendResponse(res, {
       statusCode: 201,
       success: true,
@@ -17,7 +16,6 @@ export const createCustomer = async (req: Request, res: Response) => {
     let message = "💥 Oops! Something went wrong.";
 
     if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-      // Prisma unique constraint violation (email)
       statusCode = 400;
       message = "📧 This email is already registered. Try a different one.";
     } else if (error.message?.includes("Validation")) {
@@ -31,6 +29,27 @@ export const createCustomer = async (req: Request, res: Response) => {
       statusCode,
       success: false,
       message,
+    });
+  }
+};
+
+export const getAllCustomers = async (_req: Request, res: Response) => {
+  try {
+    const result = await CustomerService.getAllCustomers();
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "📦 Customers fetched successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: `💥 Failed to fetch customers: ${
+        error.message || "Internal server error"
+      }`,
     });
   }
 };
