@@ -83,4 +83,33 @@ export const getCustomerById = async (req: Request, res: Response) => {
 };
 
 
- 
+ export const updateCustomer = async (req: Request, res: Response) => {
+   try {
+     const { id } = req.params;
+     const payload = req.body;
+
+     const existingCustomer = await CustomerService.getCustomerById(id);
+     if (!existingCustomer) {
+       return sendResponse(res, {
+         statusCode: 404,
+         success: false,
+         message: "Customer not found",
+       });
+     }
+
+     const updatedCustomer = await CustomerService.updateCustomer(id, payload);
+
+     sendResponse(res, {
+       statusCode: 200,
+       success: true,
+       message: "Customer updated successfully",
+       data: updatedCustomer,
+     });
+   } catch (error: any) {
+     sendResponse(res, {
+       statusCode: 500,
+       success: false,
+       message: error.message || "Internal server error",
+     });
+   }
+ };

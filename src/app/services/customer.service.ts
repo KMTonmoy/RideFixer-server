@@ -19,4 +19,13 @@ export const CustomerService = {
       where: { customerId: id },
     });
   },
+  async updateCustomer(
+    id: string,
+    payload: Partial<{ name: string; email: string; phone: string }>
+  ) {
+    return prisma.customer.update({
+      where: { customerId: id },
+      data: payload,
+    });
+  },
 };
