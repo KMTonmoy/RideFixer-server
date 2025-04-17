@@ -10,10 +10,9 @@
     "express": "^5.1.0"
   },
   "scripts": {
+    "prod": "NODE_ENV=production node ./dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
-    "prisma": "prisma",
-    "prod": "NODE_ENV=production node ./dist/server.js"
+     "build": "tsc"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
